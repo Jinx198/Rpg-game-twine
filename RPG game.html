@@ -241,7 +241,7 @@ There are multiple ways to set a nickname, from a list of pre-determined options
 
 //Do you go by a nickname?//
 * &lt;&lt;linkappend &quot;Yes, I do!&quot;&gt;&gt;:
-&gt; First Name: &lt;&lt;textbox &quot;$mc.nickname&quot; &quot;&quot; autofocus&gt;&gt; &lt;&lt;button [[Confirm|Index-CC]]&gt;&gt;&lt;&lt;/button&gt;&gt;
+&gt; Nickname: &lt;&lt;textbox &quot;$mc.nickname&quot; &quot;&quot; autofocus&gt;&gt; &lt;&lt;button [[Confirm|Index-CC]]&gt;&gt;&lt;&lt;/button&gt;&gt;
 &lt;&lt;/linkappend&gt;&gt;
 * [[No|Index-CC][$mc.nickname to &quot;{/}&quot;]]
 
@@ -263,6 +263,7 @@ The example below only includes pre-selected options for the player to choose.
 * [[Bartlett|Index-CC][$mc.surname to &quot;Bartlett&quot;]]
 * [[Kerr|Index-CC][$mc.surname to &quot;Kerr&quot;]]
 * [[Silva|Index-CC][$mc.surname to &quot;Silva&quot;]]
+ Surname: &lt;&lt;textbox &quot;$mc.surname&quot; &quot;&quot; autofocus&gt;&gt; &lt;&lt;button [[Confirm|Index-CC]]&gt;&gt;&lt;&lt;/button&gt;&gt;
 
 Once you are set on a name (by clicking one of the listed options), you will be sent back to the menu of traits.
 /* 
@@ -280,7 +281,6 @@ Setting the gender fo the PC can be as simple as a ternary list of options (woma
 * &lt;label&gt;&lt;&lt;radiobutton &quot;$mc.gender&quot; &quot;female&quot; checked&gt;&gt; Female&lt;/label&gt;
 * &lt;label&gt;&lt;&lt;radiobutton &quot;$mc.gender&quot; &quot;male&quot;&gt;&gt; Male&lt;/label&gt;
 * &lt;label&gt;&lt;&lt;radiobutton &quot;$mc.gender&quot; &quot;nonbinary&quot;&gt;&gt; Nonbinary&lt;/label&gt;
-* &lt;label&gt;&lt;&lt;radiobutton &quot;$mc.gender&quot; &quot;custom&quot;&gt;&gt; Something else&lt;/label&gt;
 
 //Are you trans?//
 * &lt;label&gt;&lt;&lt;radiobutton &quot;$mc.trans&quot; &quot;transgender&quot;&gt;&gt; Yes&lt;/label&gt;
@@ -291,13 +291,13 @@ Setting the gender fo the PC can be as simple as a ternary list of options (woma
 * &lt;label&gt;&lt;&lt;radiobutton &quot;$mc.person&quot; &quot;woman&quot; checked&gt;&gt; a woman.&lt;/label&gt;
 * &lt;label&gt;&lt;&lt;radiobutton &quot;$mc.person&quot; &quot;man&quot;&gt;&gt; a man.&lt;/label&gt;
 * &lt;label&gt;&lt;&lt;radiobutton &quot;$mc.person&quot; &quot;person&quot;&gt;&gt; a person.&lt;/label&gt;
-* &lt;label&gt;&lt;&lt;radiobutton &quot;$mc.person&quot; &quot;custom&quot;&gt;&gt; something else.&lt;/label&gt;
+
 
 //Due to your title, people refer to you as...//
 * &lt;label&gt;&lt;&lt;radiobutton &quot;$mc.title&quot; &quot;lady&quot; checked&gt;&gt; Lady $mc.name.&lt;/label&gt;
 * &lt;label&gt;&lt;&lt;radiobutton &quot;$mc.title&quot; &quot;lord&quot;&gt;&gt; Lord $mc.name.&lt;/label&gt;
 * &lt;label&gt;&lt;&lt;radiobutton &quot;$mc.title&quot; &quot;liege&quot;&gt;&gt; Liege $mc.name.&lt;/label&gt;
-* &lt;label&gt;&lt;&lt;radiobutton &quot;$mc.title&quot; &quot;custom&quot;&gt;&gt; something else.&lt;/label&gt;
+
 
 //What do you identify as?//
 * &lt;label&gt;&lt;&lt;radiobutton &quot;$mc.sexu&quot; &quot;Heterosexual&quot; checked&gt;&gt; Heterosexual&lt;/label&gt;
@@ -753,22 +753,16 @@ If you want to change your name, please indicate it in the textbox below:
     &lt;&lt;run Dialog.close()&gt;&gt;
 &lt;&lt;/button&gt;&gt;</tw-passagedata><tw-passagedata pid="20" name="Popup-SurName" tags="popup" position="800,350" size="100,100">Your surname is currently $mc.surname.
 If you want to change it, please select one of the options below:
+&lt;&lt;textbox &quot;_surname&quot; `$mc.surname` autofocus&gt;&gt; 
 
-* &lt;&lt;link &quot;Bartlett&quot;&gt;&gt;
-    &lt;&lt;set $mc.surname to &quot;Bartlett&quot;&gt;&gt;
-    &lt;&lt;replace &quot;#mc-surb&quot;&gt;&gt;$mc.surname&lt;&lt;/replace&gt;&gt;
+&lt;&lt;button &quot;Confirm&quot;&gt;&gt;
+    &lt;&lt;if _surname&gt;&gt;
+        &lt;&lt;set $mc.surname to _surname&gt;&gt;
+        &lt;&lt;replace &quot;#mc-surb&quot;&gt;&gt;$mc.surname&lt;&lt;/replace&gt;&gt;
+    &lt;&lt;/if&gt;&gt;
     &lt;&lt;run Dialog.close()&gt;&gt;
-&lt;&lt;/link&gt;&gt;
-* &lt;&lt;link &quot;Kerr&quot;&gt;&gt;
-    &lt;&lt;set $mc.surname to &quot;Kerr&quot;&gt;&gt;
-    &lt;&lt;replace &quot;#mc-surb&quot;&gt;&gt;$mc.surname&lt;&lt;/replace&gt;&gt;
-    &lt;&lt;run Dialog.close()&gt;&gt;
-&lt;&lt;/link&gt;&gt;
-* &lt;&lt;link &quot;Silva&quot;&gt;&gt;
-    &lt;&lt;set $mc.surname to &quot;Silva&quot;&gt;&gt;
-    &lt;&lt;replace &quot;#mc-surb&quot;&gt;&gt;$mc.surname&lt;&lt;/replace&gt;&gt;
-    &lt;&lt;run Dialog.close()&gt;&gt;
-&lt;&lt;/link&gt;&gt;</tw-passagedata><tw-passagedata pid="21" name="Popup-Gender" tags="popup" position="925,350" size="100,100">&lt;&lt;IfGenderIsCustom&gt;&gt;\
+&lt;&lt;/button&gt;&gt;
+</tw-passagedata><tw-passagedata pid="21" name="Popup-Gender" tags="popup" position="925,350" size="100,100">&lt;&lt;IfGenderIsCustom&gt;&gt;\
 You currently describe yourself as a &lt;&lt;if $mc.trans&gt;&gt;$mc.trans &lt;&lt;/if&gt;&gt;$mc.gender, referred by others as a(n) $mc.person, and a(n) $mc.title 
 
 If you want to change any trait, please select one of the options below:
@@ -777,7 +771,6 @@ If you want to change any trait, please select one of the options below:
 * &lt;label&gt;&lt;&lt;radiobutton &quot;_gender&quot; &quot;female&quot; autocheck&gt;&gt; Female&lt;/label&gt;
 * &lt;label&gt;&lt;&lt;radiobutton &quot;_gender&quot; &quot;male&quot; autocheck&gt;&gt; Male&lt;/label&gt;
 * &lt;label&gt;&lt;&lt;radiobutton &quot;_gender&quot; &quot;nonbinary&quot; autocheck&gt;&gt; Nonbinary&lt;/label&gt;
-* &lt;label&gt;&lt;&lt;radiobutton &quot;_gender&quot; &quot;custom&quot; autocheck&gt;&gt; Sometime else&lt;/label&gt;
 
 //Are you trans?//
 * &lt;label&gt;&lt;&lt;radiobutton &quot;_trans&quot; &quot;transgender&quot; autocheck&gt;&gt; Yes&lt;/label&gt;
@@ -788,13 +781,12 @@ If you want to change any trait, please select one of the options below:
 * &lt;label&gt;&lt;&lt;radiobutton &quot;_person&quot; &quot;woman&quot; autocheck&gt;&gt; a woman.&lt;/label&gt;
 * &lt;label&gt;&lt;&lt;radiobutton &quot;_person&quot; &quot;man&quot; autocheck&gt;&gt; a man.&lt;/label&gt;
 * &lt;label&gt;&lt;&lt;radiobutton &quot;_person&quot; &quot;person&quot; autocheck&gt;&gt; a person.&lt;/label&gt;
-* &lt;label&gt;&lt;&lt;radiobutton &quot;_person&quot; &quot;custom&quot; autocheck&gt;&gt; sometime else.&lt;/label&gt;
+
 
 //Due to your title, people refer to you as...//
 * &lt;label&gt;&lt;&lt;radiobutton &quot;_title&quot; &quot;lady&quot; autocheck&gt;&gt; Lady $mc.name.&lt;/label&gt;
 * &lt;label&gt;&lt;&lt;radiobutton &quot;_title&quot; &quot;lord&quot; autocheck&gt;&gt; Lord $mc.name.&lt;/label&gt;
 * &lt;label&gt;&lt;&lt;radiobutton &quot;_title&quot; &quot;liege&quot; autocheck&gt;&gt; Liege $mc.name.&lt;/label&gt;
-* &lt;label&gt;&lt;&lt;radiobutton &quot;_title&quot; &quot;custom&quot; autocheck&gt;&gt; sometime else.&lt;/label&gt;
 
 //What do you identify as?//
 * &lt;label&gt;&lt;&lt;radiobutton &quot;$mc.sexu&quot; &quot;Heterosexual&quot; checked&gt;&gt; Heterosexual&lt;/label&gt;
@@ -1698,8 +1690,9 @@ Please review the character page below and confirm the traits chosen are correct
 &lt;&lt;set $pages to {}&gt;&gt;
 </tw-passagedata><tw-passagedata pid="45" name="StoryCaption" tags="" position="25,150" size="100,100">&lt;&lt;button &quot;Lexicon&quot;&gt;&gt;&lt;&lt;PopupLexicon&gt;&gt;&lt;&lt;/button&gt;&gt;
 &lt;&lt;button &quot;Credits&quot;&gt;&gt;&lt;&lt;PopupCredits&gt;&gt;&lt;&lt;/button&gt;&gt;
-&lt;&lt;if passage() is &quot;CC-Check&quot;&gt;&gt;&lt;&lt;button &quot;Statistics&quot;&gt;&gt;&lt;&lt;PopupStats&gt;&gt;&lt;&lt;/button&gt;&gt;&lt;&lt;/if&gt;&gt;</tw-passagedata><tw-passagedata pid="46" name="Start" tags="" position="150,300" size="100,100">&lt;h1&gt;Welcome to the This Character Creator Template!&lt;/h1&gt;\
-&lt;h3 style=&quot;font-weight: normal;&quot;&gt;This Template/Guide is meant to showcase what //could// be done with a character creator, displaying different characteristics and types of interactivity.
+&lt;&lt;button &quot;Statistics&quot;&gt;&gt;&lt;&lt;PopupStats&gt;&gt;&lt;&lt;/button&gt;&gt;</tw-passagedata><tw-passagedata pid="46" name="Start" tags="" position="150,300" size="100,100">&lt;h1&gt;Welcome to the This RPG game by Jay Villanueva!&lt;/h1&gt;\
+&lt;h3 style=&quot;font-weight: normal;&quot;&gt;This game is meant to simulate DnD mechanics and have a very thourough character customization. Also include the option to use a preset character or randomize your features.
+Check statistics to see your information. It is advised to already put information in before you check.
 &lt;/h3&gt;\
 
 &lt;center&gt;&lt;&lt;button [[Create Character|Index-CC]]&gt;&gt;&lt;&lt;/button&gt;&gt;&lt;/center&gt;</tw-passagedata><tw-passagedata pid="47" name="Lexicon" tags="" position="150,150" size="100,100">IF = Interactive Fiction
@@ -1711,31 +1704,34 @@ $mc.name
 &lt;/center&gt;
 &lt;h3&gt;Nickname&lt;/h3&gt;\
 &lt;center&gt;
-$mc.name
+$mc.nickname
 &lt;/center&gt;
 &lt;h3&gt;Surname&lt;/h3&gt;\
 &lt;center&gt;
-$mc.name
+$mc.surname
 &lt;/center&gt;
 &lt;h3&gt;Gender Identity&lt;/h3&gt;\
 &lt;center&gt;
-$mc.name
+$mc.gender
+$mc.person
+$mc.title
+$mc.sexu
 &lt;/center&gt;
 &lt;h3&gt;Pronouns&lt;/h3&gt;\
 &lt;center&gt;
-$mc.name
+$mc.pronouns
 &lt;/center&gt;
 &lt;h3&gt;Age&lt;/h3&gt;\
 &lt;center&gt;
-$mc.name
+$mc.age
 &lt;/center&gt;
 &lt;h3&gt;Eyes&lt;/h3&gt;\
 &lt;center&gt;
-$mc.name
+$mc.eyes
 &lt;/center&gt;
 &lt;h3&gt;Hair&lt;/h3&gt;\
 &lt;center&gt;
-$mc.name
+$hair.texture
 &lt;/center&gt;
 &lt;h3&gt;Facial Features&lt;/h3&gt;\
 &lt;center&gt;
@@ -1743,11 +1739,15 @@ $mc.name
 &lt;/center&gt;
 &lt;h3&gt;Skin&lt;/h3&gt;\
 &lt;center&gt;
-$mc.name
+$skin.undertone
+$skin.color
+$skin.features
 &lt;/center&gt;
 &lt;h3&gt;Build&lt;/h3&gt;\
 &lt;center&gt;
-$mc.name
+$body.height
+$body.weight
+$body.musc
 &lt;/center&gt;
 
 &lt;h3&gt;Personality&lt;/h3&gt;\
@@ -1756,11 +1756,11 @@ $personality
 &lt;/center&gt;
 &lt;h3&gt;Class&lt;/h3&gt;\
 &lt;center&gt;
-$mc.name
+$class
 &lt;/center&gt;
 &lt;h3&gt;Background&lt;/h3&gt;\
 &lt;center&gt;
-$mc.name
+$background
 &lt;/center&gt;
 
 &lt;h3&gt;Wealth&lt;/h3&gt;\
@@ -2399,7 +2399,7 @@ $Alex: &lt;progress value=&quot;50&quot; max=&quot;100&quot;&gt;&lt;/progress&gt
     &lt;&lt;run Dialog.create(&quot;Change Your Gender&quot;).wikiPassage(&quot;Popup-Gender&quot;).open();&gt;&gt;
 &lt;&lt;/widget&gt;&gt;
 &lt;&lt;widget &quot;IfGenderIsCustom&quot;&gt;&gt;
-    /*
+   /*
         This is to check which option was selected, especially if it was custom, and autocheck the relevant radiobutton.
         All of this use temporary variables so it doesn&#39;t override the actual variable if the dialog box is closed without actually confirming the change. 
     */
@@ -2627,6 +2627,10 @@ $Alex: &lt;progress value=&quot;50&quot; max=&quot;100&quot;&gt;&lt;/progress&gt
 &lt;&lt;/widget&gt;&gt;</tw-passagedata><tw-passagedata pid="51" name="Beginning" tags="" position="250,925" size="100,100">End of game so far.
 More to be added later.
 
+To be added:
+Dialogue affected by character traits.
+Generate npc&#39;s as enemies or friendly.
+Create a battle senario.
 </tw-passagedata></tw-storydata>
 	<script id="script-sugarcube" type="text/javascript">
 	/*! SugarCube JS */
